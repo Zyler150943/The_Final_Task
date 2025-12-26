@@ -1,0 +1,89 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+env3/
+venv3/
+.venv/
+
+# Environment variables
+.env
+.env.local
+.env.development
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific ignores
+models/
+.cache/
+outputs/
+*.pth
+*.bin
+*.h5
+*.keras
+*.pkl
+*.joblib
+
+# Data files (если большие)
+data/*.pdf
+data/*.docx
+data/*.pptx
+!data/sample_english.txt
+!data/sample_russian.txt
+!data/sample_german.txt
+
+# Test outputs
+test_outputs/
+.coverage
+htmlcov/
+.coverage.*
+.pytest_cache/
+
+# Logs
+*.log
+logs/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Package files
+*.egg-info/
+dist/
+build/
+sdist/
+wheels/
+
+# Documentation builds
+docs/_build/
+site/
+
+# CI/CD artifacts
+.artifacts/
+test-reports/
+
+# IDE specific
+.history/
+*.code-workspace
+.project
+.pydevproject
+.settings/
