@@ -4,17 +4,18 @@
 """
 
 import logging
-from typing import Dict, List, Optional
 from dataclasses import dataclass
+from typing import Dict, List, Optional
 
+import nltk
 import torch
 from nltk.tokenize import sent_tokenize
-import nltk
+
+from ..models.abstractive import AbstractiveModel, ModelFactory
 
 # Локальные импорты
 from .language_detector import LanguageDetector
 from .text_processor import TextProcessor
-from ..models.abstractive import ModelFactory, AbstractiveModel
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)

@@ -10,22 +10,21 @@ __repository__ = "https://github.com/Zyler150943/The_Final_Task"
 
 # Реэкспорт основных компонентов для удобного импорта
 from .core import (
-    TextSummarizer,
-    SummaryResult,
-    create_summarizer,
     LanguageDetector,
-    create_language_detector,
+    SummaryResult,
     TextProcessor,
+    TextSummarizer,
+    create_language_detector,
+    create_summarizer,
     create_text_processor,
 )
-
 from .models.abstractive import (
     AbstractiveModel,
+    BatchSummarizer,
     EnglishSummarizer,
-    RussianSummarizer,
     GermanSummarizer,
     ModelFactory,
-    BatchSummarizer,
+    RussianSummarizer,
 )
 
 # Для обратной совместимости

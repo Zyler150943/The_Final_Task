@@ -1,11 +1,11 @@
-import unittest
-import tempfile
 import os
 import sys
+import tempfile
+import unittest
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from utils.file_handler import save_text_file, load_text_file
+from utils.file_handler import load_text_file, save_text_file
 
 
 class TestFileHandler(unittest.TestCase):

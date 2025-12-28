@@ -3,12 +3,12 @@
 Модуль для настройки логирования.
 """
 
+import json
 import logging
 import sys
-from pathlib import Path
-from typing import Optional, Dict, Any
-import json
 from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, Optional
 
 
 class JSONFormatter(logging.Formatter):

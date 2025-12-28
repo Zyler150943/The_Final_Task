@@ -6,10 +6,10 @@
 import logging
 from typing import Dict, Optional, Tuple
 
-from langdetect import detect, DetectorFactory
-from langdetect.lang_detect_exception import LangDetectException
 import fasttext
 from fasttext.FastText import _FastText
+from langdetect import DetectorFactory, detect
+from langdetect.lang_detect_exception import LangDetectException
 
 # Настройка детерминизма для langdetect
 DetectorFactory.seed = 0

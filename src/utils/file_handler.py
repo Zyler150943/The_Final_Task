@@ -3,12 +3,13 @@
 Модуль для работы с файлами.
 """
 
-import os
 import json
 import logging
-from typing import Optional, Dict, Any, List
-import chardet
+import os
 from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+import chardet
 
 # Настройка логирования
 logger = logging.getLogger(__name__)

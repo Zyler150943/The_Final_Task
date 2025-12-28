@@ -1,6 +1,6 @@
-import unittest
-import sys
 import os
+import sys
+import unittest
 
 # Добавляем путь к src для импорта
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))

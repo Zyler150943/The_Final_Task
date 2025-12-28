@@ -4,11 +4,11 @@
 """
 
 import json
-import os
 import logging
-from typing import Dict, Any, Optional
+import os
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from dataclasses import dataclass, asdict, field
+from typing import Any, Dict, Optional
 
 # Настройка логирования
 logger = logging.getLogger(__name__)

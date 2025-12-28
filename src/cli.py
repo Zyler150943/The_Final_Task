@@ -5,24 +5,24 @@
 """
 
 import argparse
-import sys
 import logging
+import sys
 from pathlib import Path
-from typing import Optional, List
+from typing import List, Optional
 
 # Добавляем путь для импорта модулей
 sys.path.append(str(Path(__file__).parent))
 
 from core import create_summarizer
+from utils.config import create_config_file, load_config
 from utils.file_handler import (
+    batch_process_files,
+    list_text_files,
     load_text_file,
     save_text_file,
-    list_text_files,
-    batch_process_files,
 )
-from utils.logger import setup_logging
-from utils.config import load_config, create_config_file
 from utils.helpers import format_size, validate_text
+from utils.logger import setup_logging
 
 
 def setup_argparse() -> argparse.ArgumentParser:
