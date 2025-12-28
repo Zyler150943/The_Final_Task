@@ -3,10 +3,10 @@
 Модуль для управления конфигурацией приложения.
 """
 
+from dataclasses import asdict, dataclass, field
 import json
 import logging
 import os
-from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Dict, Optional
 

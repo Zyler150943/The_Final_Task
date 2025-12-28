@@ -6,8 +6,8 @@
 
 import argparse
 import logging
-import sys
 from pathlib import Path
+import sys
 from typing import List, Optional
 
 # Добавляем путь для импорта модулей

@@ -16,7 +16,6 @@ from .core import (
     create_summarizer,
     create_text_processor,
 )
-
 from .models.abstractive import (
     AbstractiveModel,
     BatchSummarizer,

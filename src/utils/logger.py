@@ -3,11 +3,11 @@
 Модуль для настройки логирования.
 """
 
+from datetime import datetime
 import json
 import logging
-import sys
-from datetime import datetime
 from pathlib import Path
+import sys
 from typing import Any, Dict, Optional
 
 
@@ -148,8 +148,8 @@ def log_execution_time(logger: logging.Logger):
     """
 
     def decorator(func):
-        import time
         from functools import wraps
+        import time
 
         @wraps(func)
         def wrapper(*args, **kwargs):

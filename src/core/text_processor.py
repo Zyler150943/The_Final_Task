@@ -3,16 +3,16 @@
 Модуль для предобработки текста перед резюмированием.
 """
 
+from collections import Counter
 import logging
 import re
 import string
-from collections import Counter
 from typing import Dict, List, Optional, Tuple
 
 import nltk
-import numpy as np
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize, word_tokenize
+import numpy as np
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)

@@ -3,13 +3,13 @@
 Вспомогательные функции.
 """
 
+from functools import wraps
 import hashlib
+from pathlib import Path
 import re
 import time
-import unicodedata
-from functools import wraps
-from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
+import unicodedata
 
 
 def format_size(size_bytes: int) -> str:

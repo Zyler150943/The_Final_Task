@@ -3,13 +3,13 @@
 Основной модуль для резюмирования текста на нескольких языках.
 """
 
-import logging
 from dataclasses import dataclass
+import logging
 from typing import Dict, List, Optional
 
 import nltk
-import torch
 from nltk.tokenize import sent_tokenize
+import torch
 
 from ..models.abstractive import AbstractiveModel, ModelFactory
 
