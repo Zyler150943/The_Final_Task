@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline для Multilingual Learning Material Summarizer
 
 on:
   push:
@@ -483,23 +483,23 @@ jobs:
         echo "" >> final-report.md
         echo "## Результаты:" >> final-report.md
         
-        # Проверяем результаты каждого job
+        # Проверяем результаты каждого job явно
         if [[ "${{ needs.code-quality.result }}" == "success" ]]; then
           echo "### ✅ Качество кода: Успешно" >> final-report.md
         else
-          echo "### ❌ Качество кода: Провалено" >> final-report.md
+          echo "### ❌ Качество кода: ${{ needs.code-quality.result }}" >> final-report.md
         fi
         
         if [[ "${{ needs.unit-tests.result }}" == "success" ]]; then
           echo "### ✅ Unit тесты: Успешно" >> final-report.md
         else
-          echo "### ❌ Unit тесты: Провалено" >> final-report.md
+          echo "### ❌ Unit тесты: ${{ needs.unit-tests.result }}" >> final-report.md
         fi
         
         if [[ "${{ needs.integration-tests.result }}" == "success" ]]; then
           echo "### ✅ Интеграционные тесты: Успешно" >> final-report.md
         else
-          echo "### ❌ Интеграционные тесты: Провалено" >> final-report.md
+          echo "### ❌ Интеграционные тесты: ${{ needs.integration-tests.result }}" >> final-report.md
         fi
         
         if [[ "${{ needs.multilingual-tests.result }}" == "success" ]]; then
@@ -507,7 +507,15 @@ jobs:
         elif [[ "${{ needs.multilingual-tests.result }}" == "skipped" ]]; then
           echo "### ⚠️ Мультиязычные тесты: Пропущены" >> final-report.md
         else
-          echo "### ❌ Мультиязычные тесты: Провалено" >> final-report.md
+          echo "### ❌ Мультиязычные тесты: ${{ needs.multilingual-tests.result }}" >> final-report.md
+        fi
+        
+        if [[ "${{ needs.performance-benchmark.result }}" == "success" ]]; then
+          echo "### ✅ Бенчмарк производительности: Успешно" >> final-report.md
+        elif [[ "${{ needs.performance-benchmark.result }}" == "skipped" ]]; then
+          echo "### ⚠️ Бенчмарк производительности: Пропущены" >> final-report.md
+        else
+          echo "### ❌ Бенчмарк производительности: ${{ needs.performance-benchmark.result }}" >> final-report.md
         fi
         
         echo "" >> final-report.md
@@ -529,12 +537,18 @@ jobs:
         echo "## CI/CD Pipeline Failed!" > failure-report.md
         echo "### Failed jobs:" >> failure-report.md
         
-        # Проверяем каждый job
-        for job in code-quality unit-tests integration-tests multilingual-tests; do
-          if [[ "${{ needs.$job.result }}" != "success" ]]; then
-            echo "- $job: ${{ needs.$job.result }}" >> failure-report.md
-          fi
-        done
+        # Проверяем каждый job явно
+        if [[ "${{ needs.code-quality.result }}" != "success" && "${{ needs.code-quality.result }}" != "skipped" ]]; then
+          echo "- code-quality: ${{ needs.code-quality.result }}" >> failure-report.md
+        fi
+        
+        if [[ "${{ needs.unit-tests.result }}" != "success" && "${{ needs.unit-tests.result }}" != "skipped" ]]; then
+          echo "- unit-tests: ${{ needs.unit-tests.result }}" >> failure-report.md
+        fi
+        
+        if [[ "${{ needs.integration-tests.result }}" != "success" && "${{ needs.integration-tests.result }}" != "skipped" ]]; then
+          echo "- integration-tests: ${{ needs.integration-tests.result }}" >> failure-report.md
+        fi
         
         echo "### Check logs for details:" >> failure-report.md
         echo "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> failure-report.md
