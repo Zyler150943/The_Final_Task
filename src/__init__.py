@@ -1,11 +1,9 @@
 """
-Multilingual Learning Material Summarizer
-Репозиторий: https://github.com/Zyler150943/The_Final_Task
+Модуль src содержит основную функциональность приложения.
 """
 
 __version__ = "1.0.0"
 __author__ = "Zyler150943"
-__license__ = "MIT"
 __repository__ = "https://github.com/Zyler150943/The_Final_Task"
 
 # Реэкспорт основных компонентов для удобного импорта
@@ -18,6 +16,7 @@ from .core import (
     create_summarizer,
     create_text_processor,
 )
+
 from .models.abstractive import (
     AbstractiveModel,
     BatchSummarizer,
@@ -31,6 +30,7 @@ from .models.abstractive import (
 Summarizer = TextSummarizer
 
 __all__ = [
+    # Основные компоненты
     "TextSummarizer",
     "Summarizer",
     "SummaryResult",
@@ -39,6 +39,7 @@ __all__ = [
     "create_language_detector",
     "TextProcessor",
     "create_text_processor",
+    # Модели
     "AbstractiveModel",
     "EnglishSummarizer",
     "RussianSummarizer",
