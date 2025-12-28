@@ -1,0 +1,18 @@
+Machine Learning Fundamentals
+
+Machine learning is a subset of artificial intelligence that enables computers to learn from data without being explicitly programmed. The process involves several key steps:
+
+1. Data Collection: Gathering relevant data from various sources.
+2. Data Preprocessing: Cleaning and preparing data for analysis.
+3. Feature Engineering: Selecting and transforming variables.
+4. Model Selection: Choosing appropriate algorithms.
+5. Training: Teaching the model using training data.
+6. Evaluation: Testing model performance on unseen data.
+7. Deployment: Implementing the model in real-world applications.
+
+There are three main types of machine learning:
+- Supervised Learning: Uses labeled data (classification, regression)
+- Unsupervised Learning: Finds patterns in unlabeled data (clustering)
+- Reinforcement Learning: Learns through rewards and penalties
+
+Applications include image recognition, natural language processing, recommendation systems, and autonomous vehicles.

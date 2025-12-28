@@ -1,0 +1,56 @@
+{
+  "project_name": "The_Final_Task - Multilingual Learning Material Summarizer",
+  "version": "1.0.0",
+  "debug": false,
+  
+  "device": "auto",
+  "cache_models": true,
+  "log_level": "INFO",
+  
+  "supported_languages": ["en", "ru", "de"],
+  "default_language": "en",
+  "auto_detect_language": true,
+  
+  "model_configs": {
+    "en": {
+      "language": "en",
+      "model_name": "facebook/bart-large-cnn",
+      "max_input_length": 1024,
+      "max_output_length": 512,
+      "min_output_length": 30
+    },
+    "ru": {
+      "language": "ru",
+      "model_name": "cointegrated/rut5-base-absum",
+      "max_input_length": 512,
+      "max_output_length": 200,
+      "min_output_length": 20
+    },
+    "de": {
+      "language": "de",
+      "model_name": "ml6team/mt5-small-german-finetune-mlsum",
+      "max_input_length": 512,
+      "max_output_length": 200,
+      "min_output_length": 20
+    }
+  },
+  
+  "text_processing": {
+    "clean_text": true,
+    "max_text_length": 50000,
+    "min_text_length": 10
+  },
+  
+  "summarization": {
+    "compression_levels": [20, 30, 50],
+    "default_compression": 30,
+    "extract_key_points": true,
+    "abstractive": true
+  },
+  
+  "paths": {
+    "data_dir": "data",
+    "outputs_dir": "outputs",
+    "logs_dir": "logs"
+  }
+}

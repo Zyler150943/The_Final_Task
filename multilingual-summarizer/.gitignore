@@ -78,12 +78,57 @@ docs/_build/
 site/
 
 # CI/CD artifacts
-.artifacts/
-test-reports/
+.github/actions/runner/
+.github/actions/cache/
+test-outputs/
+*.report.md
+*.coverage
+.coverage
+.coverage.*
+.coverage_html/
 
-# IDE specific
-.history/
-*.code-workspace
-.project
-.pydevproject
-.settings/
+# Performance test results
+memory_usage.txt
+performance_*.log
+
+# Manual test outputs
+test_*.txt
+output_*.txt
+
+# Конфигурационные файлы (кроме примеров)
+config.json
+.env
+
+# Конфиги пользователя
+.config/
+.local/
+
+# Папка для кэша моделей
+.cache/
+models/
+
+# Выходные данные
+outputs/
+!outputs/.gitkeep
+
+# Временные файлы
+temp/
+*.tmp
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+models/
+.cache/
+outputs/
+logs/
+!logs/.gitkeep
+!outputs/.gitkeep
+!data/.gitkeep

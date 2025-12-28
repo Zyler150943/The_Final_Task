@@ -1,0 +1,18 @@
+Grundlagen des maschinellen Lernens
+
+Maschinelles Lernen ist ein Teilbereich der künstlichen Intelligenz, der es Computern ermöglicht, aus Daten zu lernen, ohne explizit programmiert zu werden. Der Prozess umfasst mehrere Schlüsselschritte:
+
+1. Datensammlung: Erfassung relevanter Daten aus verschiedenen Quellen.
+2. Datenvorverarbeitung: Bereinigung und Vorbereitung der Daten für die Analyse.
+3. Merkmalserstellung: Auswahl und Transformation von Variablen.
+4. Modellauswahl: Auswahl geeigneter Algorithmen.
+5. Training: Training des Modells mit Trainingsdaten.
+6. Bewertung: Testen der Modellleistung auf neuen Daten.
+7. Bereitstellung: Implementierung des Modells in realen Anwendungen.
+
+Es gibt drei Haupttypen des maschinellen Lernens:
+- Überwachtes Lernen: Verwendet beschriftete Daten (Klassifikation, Regression)
+- Unüberwachtes Lernen: Findet Muster in unbeschrifteten Daten (Clustering)
+- Bestärkendes Lernen: Lernt durch Belohnungen und Strafen
+
+Anwendungen umfassen Bilderkennung, Verarbeitung natürlicher Sprache, Empfehlungssysteme und autonome Fahrzeuge.

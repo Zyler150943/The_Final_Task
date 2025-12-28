@@ -1,0 +1,105 @@
+name: Manual Multilingual Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      language:
+        description: 'Язык для тестирования'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - 'all'
+          - 'en'
+          - 'ru'
+          - 'de'
+      compression:
+        description: 'Уровень сжатия'
+        required: true
+        default: '30'
+        type: choice
+        options:
+          - '20'
+          - '30'
+          - '50'
+
+jobs:
+  manual-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run manual test
+      run: |
+        echo "## Manual Test Report" > manual-test-report.md
+        echo "### Configuration:" >> manual-test-report.md
+        echo "- Language: ${{ github.event.inputs.language }}" >> manual-test-report.md
+        echo "- Compression: ${{ github.event.inputs.compression }}%" >> manual-test-report.md
+        echo "- Python: 3.9" >> manual-test-report.md
+        echo "" >> manual-test-report.md
+        
+        if [[ "${{ github.event.inputs.language }}" == "all" ]]; then
+          echo "### Testing all languages..." >> manual-test-report.md
+          
+          # Английский
+          echo "#### English:" >> manual-test-report.md
+          python src/cli.py --text "Machine learning is an important field of AI." --language en --compression ${{ github.event.inputs.compression }} --output test_en.txt
+          echo "✅ English test completed" >> manual-test-report.md
+          
+          # Русский
+          echo "#### Russian:" >> manual-test-report.md
+          python src/cli.py --text "Машинное обучение — важная область ИИ." --language ru --compression ${{ github.event.inputs.compression }} --output test_ru.txt
+          echo "✅ Russian test completed" >> manual-test-report.md
+          
+          # Немецкий
+          echo "#### German:" >> manual-test-report.md
+          python src/cli.py --text "Maschinelles Lernen ist ein wichtiges Gebiet der KI." --language de --compression ${{ github.event.inputs.compression }} --output test_de.txt
+          echo "✅ German test completed" >> manual-test-report.md
+          
+        else
+          echo "### Testing ${{ github.event.inputs.language }} language..." >> manual-test-report.md
+          
+          case "${{ github.event.inputs.language }}" in
+            en)
+              text="Machine learning is an important field of artificial intelligence that enables computers to learn from data."
+              ;;
+            ru)
+              text="Машинное обучение — важная область искусственного интеллекта, которая позволяет компьютерам обучаться на данных."
+              ;;
+            de)
+              text="Maschinelles Lernen ist ein wichtiges Gebiet der künstlichen Intelligenz, das es Computern ermöglicht, aus Daten zu lernen."
+              ;;
+          esac
+          
+          python src/cli.py --text "$text" --language ${{ github.event.inputs.language }} --compression ${{ github.event.inputs.compression }} --output test_output.txt
+          echo "✅ Test completed successfully" >> manual-test-report.md
+        fi
+        
+        echo "" >> manual-test-report.md
+        echo "### Test completed at: $(date)" >> manual-test-report.md
+    
+    - name: Upload test report
+      uses: actions/upload-artifact@v3
+      with:
+        name: manual-test-report
+        path: manual-test-report.md
+    
+    - name: Upload test outputs
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-outputs
+        path: |
+          test_*.txt
+          output_*.txt
