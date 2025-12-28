@@ -236,39 +236,28 @@ pytest tests/ -k "english or russian"
 ## CI/CD Pipeline
 
 Проект использует GitHub Actions для автоматизации:
-- ✅ Проверка кода (flake8, black, isort, mypy, pylint)
-- ✅ Запуск тестов на Python 3.8, 3.9, 3.10
-- ✅ Тестирование на разных языках
-- ✅ Создание артефактов с результатами
-- ✅ Плановые запуски (ежедневно)
-- ✅ Ручное тестирование через GitHub UI
-- ✅ Автоматическая документация
 
-### Пример вывода работы CI/CD:
+### Основные проверки:
+- ✅ **Проверка кода**: black, isort, flake8, pylint
+- ✅ **Unit тесты**: pytest с покрытием кода
+- ✅ **Интеграционные тесты**: базовые функциональные проверки
+- ✅ **Мультиязычные тесты**: поддержка английского, русского, немецкого
+- ✅ **Генерация отчетов**: артефакты с результатами всех проверок
 
-```txt
-Run Actions: ci-cd.yml
-✓ Code Quality Checks: PASSED
-✓ Unit Tests (Python 3.8, 3.9, 3.10): PASSED
-✓ Integration Tests: PASSED
-✓ Multilingual Tests: PASSED
-✓ Performance Benchmark: PASSED
-✓ Documentation Deployment: SUCCESS
+### Расписание:
+- Ежедневный запуск в полночь (`schedule: '0 0 * * *'`)
 
-Test Coverage Report:
-- src/core/summarizer.py: 92%
-- src/core/language_detector.py: 88%
-- src/core/text_processor.py: 85%
-- src/utils/file_handler.py: 95%
-- Overall Coverage: 85%
+### Ручной запуск:
+Возможность запуска через GitHub UI с выбором типа тестов
 
-Multilingual Test Results:
-✓ English (en): Model loaded successfully, summarization working
-✓ Russian (ru): Model loaded successfully, summarization working  
-✓ German (de): Model loaded successfully, summarization working
-```
+### Артефакты (доступны после выполнения):
+- `code-quality-report` - отчет о качестве кода
+- `test-results` - результаты тестов
+- `multilingual-test-report` - отчет по мультиязычным тестам  
+- `final-ci-cd-report` - итоговый отчет
 
-Статус сборки:
+### Статус сборки:
+![CI/CD Status](https://github.com/Zyler150943/The_Final_Task/actions/workflows/ci-cd.yml/badge.svg)
 
 ## Креативные функции CI/CD
 
