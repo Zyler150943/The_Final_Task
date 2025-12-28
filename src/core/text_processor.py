@@ -27,27 +27,27 @@ class TextProcessor:
 
     # Стоп-слова для разных языков
     STOPWORDS = {
-        'en': set(stopwords.words('english')),
-        'ru': set(stopwords.words('russian')),
-        'de': set(stopwords.words('german')),
+        "en": set(stopwords.words("english")),
+        "ru": set(stopwords.words("russian")),
+        "de": set(stopwords.words("german")),
     }
 
     # Регулярные выражения для очистки текста
-    URL_PATTERN = re.compile(r'https?://\S+|www\.\S+')
-    EMAIL_PATTERN = re.compile(r'\S+@\S+\.\S+')
-    PHONE_PATTERN = re.compile(r'\+?\d[\d\s\-\(\)]{7,}\d')
-    SPECIAL_CHARS_PATTERN = re.compile(r'[^\w\s.,!?;:()\-]')
-    MULTIPLE_SPACES_PATTERN = re.compile(r'\s+')
-    MULTIPLE_NEWLINES_PATTERN = re.compile(r'\n{3,}')
+    URL_PATTERN = re.compile(r"https?://\S+|www\.\S+")
+    EMAIL_PATTERN = re.compile(r"\S+@\S+\.\S+")
+    PHONE_PATTERN = re.compile(r"\+?\d[\d\s\-\(\)]{7,}\d")
+    SPECIAL_CHARS_PATTERN = re.compile(r"[^\w\s.,!?;:()\-]")
+    MULTIPLE_SPACES_PATTERN = re.compile(r"\s+")
+    MULTIPLE_NEWLINES_PATTERN = re.compile(r"\n{3,}")
 
     # Знаки препинания для разных языков
     PUNCTUATION = {
-        'en': string.punctuation,
-        'ru': string.punctuation + '«»—',
-        'de': string.punctuation + '«»—',
+        "en": string.punctuation,
+        "ru": string.punctuation + "«»—",
+        "de": string.punctuation + "«»—",
     }
 
-    def __init__(self, language: str = 'en'):
+    def __init__(self, language: str = "en"):
         """
         Инициализация процессора текста.
 
@@ -55,15 +55,15 @@ class TextProcessor:
             language: Код языка ('en', 'ru', 'de')
         """
         self.language = language
-        
+
         # Загрузка необходимых ресурсов NLTK
         try:
-            nltk.download('punkt', quiet=True)
-            nltk.download('punkt_tab', quiet=True)
-            nltk.download('stopwords', quiet=True)
+            nltk.download("punkt", quiet=True)
+            nltk.download("punkt_tab", quiet=True)
+            nltk.download("stopwords", quiet=True)
         except Exception as e:
             logger.warning(f"Не удалось загрузить ресурсы NLTK: {e}")
-        
+
         logger.info(f"Инициализирован TextProcessor для языка: {language}")
 
     def clean_text(self, text: str, remove_stopwords: bool = False) -> str:
@@ -84,22 +84,22 @@ class TextProcessor:
         original_length = len(text)
 
         # Удаляем URLs
-        text = self.URL_PATTERN.sub('', text)
+        text = self.URL_PATTERN.sub("", text)
 
         # Удаляем email адреса
-        text = self.EMAIL_PATTERN.sub('', text)
+        text = self.EMAIL_PATTERN.sub("", text)
 
         # Удаляем номера телефонов
-        text = self.PHONE_PATTERN.sub('', text)
+        text = self.PHONE_PATTERN.sub("", text)
 
         # Заменяем множественные переносы строк на двойные
-        text = self.MULTIPLE_NEWLINES_PATTERN.sub('\n\n', text)
+        text = self.MULTIPLE_NEWLINES_PATTERN.sub("\n\n", text)
 
         # Удаляем специальные символы, но сохраняем основные знаки препинания
-        text = self.SPECIAL_CHARS_PATTERN.sub(' ', text)
+        text = self.SPECIAL_CHARS_PATTERN.sub(" ", text)
 
         # Удаляем лишние пробелы
-        text = self.MULTIPLE_SPACES_PATTERN.sub(' ', text)
+        text = self.MULTIPLE_SPACES_PATTERN.sub(" ", text)
 
         # Удаляем стоп-слова если требуется
         if remove_stopwords:
@@ -130,7 +130,7 @@ class TextProcessor:
         stop_words = self.STOPWORDS[self.language]
         words = text.split()
         filtered_words = [word for word in words if word.lower() not in stop_words]
-        return ' '.join(filtered_words)
+        return " ".join(filtered_words)
 
     def split_into_sentences(self, text: str) -> List[str]:
         """
@@ -148,7 +148,7 @@ class TextProcessor:
         except Exception as e:
             logger.error(f"Ошибка при разбиении на предложения: {e}")
             # Fallback: разбиение по знакам препинания
-            sentences = re.split(r'[.!?]+', text)
+            sentences = re.split(r"[.!?]+", text)
             return [s.strip() for s in sentences if s.strip()]
 
     def split_into_paragraphs(self, text: str) -> List[str]:
@@ -161,7 +161,7 @@ class TextProcessor:
         Returns:
             Список абзацев
         """
-        paragraphs = text.split('\n\n')
+        paragraphs = text.split("\n\n")
         return [p.strip() for p in paragraphs if p.strip()]
 
     def tokenize_words(self, text: str) -> List[str]:
@@ -207,14 +207,14 @@ class TextProcessor:
         word_freq = Counter(words)
 
         return {
-            'total_characters': len(text),
-            'total_words': len(words),
-            'total_sentences': len(sentences),
-            'unique_words': len(unique_words),
-            'avg_sentence_length': round(avg_sentence_length, 2),
-            'avg_word_length': round(avg_word_length, 2),
-            'lexical_diversity': len(unique_words) / len(words) if words else 0,
-            'most_common_words': word_freq.most_common(10),
+            "total_characters": len(text),
+            "total_words": len(words),
+            "total_sentences": len(sentences),
+            "unique_words": len(unique_words),
+            "avg_sentence_length": round(avg_sentence_length, 2),
+            "avg_word_length": round(avg_word_length, 2),
+            "lexical_diversity": len(unique_words) / len(words) if words else 0,
+            "most_common_words": word_freq.most_common(10),
         }
 
     def normalize_text(self, text: str) -> str:
@@ -234,17 +234,19 @@ class TextProcessor:
         # Удаляем знаки препинания
         if self.language in self.PUNCTUATION:
             punctuation = self.PUNCTUATION[self.language]
-            text = text.translate(str.maketrans('', '', punctuation))
+            text = text.translate(str.maketrans("", "", punctuation))
 
         # Удаляем цифры
-        text = re.sub(r'\d+', '', text)
+        text = re.sub(r"\d+", "", text)
 
         # Удаляем лишние пробелы
-        text = self.MULTIPLE_SPACES_PATTERN.sub(' ', text)
+        text = self.MULTIPLE_SPACES_PATTERN.sub(" ", text)
 
         return text.strip()
 
-    def extract_key_phrases(self, text: str, top_n: int = 10) -> List[Tuple[str, float]]:
+    def extract_key_phrases(
+        self, text: str, top_n: int = 10
+    ) -> List[Tuple[str, float]]:
         """
         Извлечение ключевых фраз из текста.
 
@@ -271,7 +273,7 @@ class TextProcessor:
         # Вычисляем вес фраз (простота для примера)
         key_phrases = []
         for bigram, freq in bigram_freq.most_common(top_n):
-            phrase = ' '.join(bigram)
+            phrase = " ".join(bigram)
             # Простой вес на основе частоты
             weight = freq / len(bigrams) if bigrams else 0
             key_phrases.append((phrase, weight))
@@ -309,18 +311,20 @@ class TextProcessor:
                 current_length += sentence_tokens
             else:
                 # Сохраняем текущую часть и начинаем новую
-                parts.append(' '.join(current_part))
+                parts.append(" ".join(current_part))
                 current_part = [sentence]
                 current_length = sentence_tokens
 
         # Добавляем последнюю часть
         if current_part:
-            parts.append(' '.join(current_part))
+            parts.append(" ".join(current_part))
 
         logger.info(f"Текст разделен на {len(parts)} частей")
         return parts
 
-    def prepare_for_summarization(self, text: str, max_length: Optional[int] = None) -> str:
+    def prepare_for_summarization(
+        self, text: str, max_length: Optional[int] = None
+    ) -> str:
         """
         Подготовка текста для резюмирования.
 
@@ -340,13 +344,13 @@ class TextProcessor:
             cleaned_text = cleaned_text[:max_length]
 
         # Убедимся, что текст заканчивается полным предложением
-        if cleaned_text and cleaned_text[-1] not in '.!?':
+        if cleaned_text and cleaned_text[-1] not in ".!?":
             # Находим последнее полное предложение
             sentences = self.split_into_sentences(cleaned_text)
             if sentences:
-                cleaned_text = ' '.join(sentences)
+                cleaned_text = " ".join(sentences)
             else:
-                cleaned_text = cleaned_text.rstrip() + '.'
+                cleaned_text = cleaned_text.rstrip() + "."
 
         return cleaned_text
 
@@ -361,22 +365,22 @@ class TextProcessor:
             Предполагаемый код языка
         """
         # Простая эвристика на основе символов
-        cyrillic_count = sum(1 for char in text if '\u0400' <= char <= '\u04FF')
-        german_chars = sum(1 for char in text if char in 'äöüßÄÖÜ')
+        cyrillic_count = sum(1 for char in text if "\u0400" <= char <= "\u04ff")
+        german_chars = sum(1 for char in text if char in "äöüßÄÖÜ")
 
         # Если больше 30% кириллицы - вероятно русский
         if len(text) > 0 and cyrillic_count / len(text) > 0.3:
-            return 'ru'
+            return "ru"
         # Если есть немецкие специфические символы
         elif german_chars > 2:
-            return 'de'
+            return "de"
         # По умолчанию английский
         else:
-            return 'en'
+            return "en"
 
 
 # Фабричная функция для удобства
-def create_text_processor(language: str = 'en') -> TextProcessor:
+def create_text_processor(language: str = "en") -> TextProcessor:
     """
     Создание экземпляра TextProcessor.
 
@@ -406,7 +410,7 @@ if __name__ == "__main__":
     """
 
     # Создание процессора
-    processor = TextProcessor(language='en')
+    processor = TextProcessor(language="en")
 
     # Очистка текста
     cleaned = processor.clean_text(sample_text)
@@ -418,7 +422,7 @@ if __name__ == "__main__":
     stats = processor.calculate_text_statistics(cleaned)
     print("=== Статистика текста ===")
     for key, value in stats.items():
-        if key != 'most_common_words':
+        if key != "most_common_words":
             print(f"{key}: {value}")
     print()
 

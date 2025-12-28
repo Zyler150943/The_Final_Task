@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class ModelConfig:
     """Конфигурация модели для конкретного языка."""
-    
+
     language: str
     model_name: str
     max_input_length: int = 1024
@@ -33,7 +33,7 @@ class ModelConfig:
 @dataclass
 class TextProcessingConfig:
     """Конфигурация обработки текста."""
-    
+
     clean_text: bool = True
     remove_stopwords: bool = False
     remove_punctuation: bool = False
@@ -48,7 +48,7 @@ class TextProcessingConfig:
 @dataclass
 class SummarizationConfig:
     """Конфигурация резюмирования."""
-    
+
     compression_levels: list = field(default_factory=lambda: [20, 30, 50])
     default_compression: int = 30
     extract_key_points: bool = True
@@ -62,7 +62,7 @@ class SummarizationConfig:
 @dataclass
 class LanguageDetectionConfig:
     """Конфигурация определения языка."""
-    
+
     min_text_length: int = 10
     confidence_threshold: float = 0.6
     fallback_language: str = "en"
@@ -73,7 +73,7 @@ class LanguageDetectionConfig:
 @dataclass
 class PathConfig:
     """Конфигурация путей."""
-    
+
     data_dir: str = "data"
     models_dir: str = "models"
     outputs_dir: str = "outputs"
@@ -86,7 +86,7 @@ class PathConfig:
 @dataclass
 class FileHandlingConfig:
     """Конфигурация работы с файлами."""
-    
+
     default_encoding: str = "utf-8"
     auto_detect_encoding: bool = True
     supported_extensions: list = field(
@@ -100,7 +100,7 @@ class FileHandlingConfig:
 @dataclass
 class LoggingConfig:
     """Конфигурация логирования."""
-    
+
     console_format: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     file_format: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     date_format: str = "%Y-%m-%d %H:%M:%S"
@@ -113,7 +113,7 @@ class LoggingConfig:
 @dataclass
 class PerformanceConfig:
     """Конфигурация производительности."""
-    
+
     use_caching: bool = True
     cache_expiry_hours: int = 24
     max_cached_items: int = 100
@@ -125,7 +125,7 @@ class PerformanceConfig:
 @dataclass
 class OutputConfig:
     """Конфигурация вывода."""
-    
+
     include_metadata: bool = True
     include_statistics: bool = True
     include_key_points: bool = True
@@ -137,7 +137,7 @@ class OutputConfig:
 @dataclass
 class SecurityConfig:
     """Конфигурация безопасности."""
-    
+
     encrypt_config: bool = False
     encryption_key: str = ""
     validate_input: bool = True
@@ -148,24 +148,24 @@ class SecurityConfig:
 @dataclass
 class Config:
     """Основная конфигурация приложения."""
-    
+
     # Основные настройки
     project_name: str = "Multilingual Learning Material Summarizer"
     version: str = "1.0.0"
     debug: bool = False
-    
+
     # Системные настройки
     device: str = "auto"
     cache_models: bool = True
     log_level: str = "INFO"
     max_workers: int = 2
-    
+
     # Языковые настройки
-    supported_languages: list = field(default_factory=lambda: ['en', 'ru', 'de'])
-    default_language: str = 'en'
+    supported_languages: list = field(default_factory=lambda: ["en", "ru", "de"])
+    default_language: str = "en"
     auto_detect_language: bool = True
     use_advanced_detector: bool = False
-    
+
     # Конфигурации компонентов
     model_configs: Dict[str, ModelConfig] = field(default_factory=dict)
     text_processing: TextProcessingConfig = field(default_factory=TextProcessingConfig)
@@ -179,7 +179,7 @@ class Config:
     performance: PerformanceConfig = field(default_factory=PerformanceConfig)
     output: OutputConfig = field(default_factory=OutputConfig)
     security: SecurityConfig = field(default_factory=SecurityConfig)
-    
+
     # Дополнительные секции (опциональные)
     api: Optional[Dict[str, Any]] = None
     monitoring: Optional[Dict[str, Any]] = None
@@ -187,46 +187,46 @@ class Config:
     scheduled_tasks: Optional[Dict[str, Any]] = None
     testing: Optional[Dict[str, Any]] = None
     updates: Optional[Dict[str, Any]] = None
-    
+
     def __post_init__(self):
         """Инициализация после создания объекта."""
         # Инициализируем конфигурации моделей по умолчанию
         if not self.model_configs:
             self._init_default_model_configs()
-        
+
         # Создаем директории если нужно
         self._create_directories()
-        
+
         # Валидация конфигурации
         self._validate_config()
-    
+
     def _init_default_model_configs(self):
         """Инициализация конфигураций моделей по умолчанию."""
         default_configs = {
-            'en': ModelConfig(
-                language='en',
-                model_name='facebook/bart-large-cnn',
+            "en": ModelConfig(
+                language="en",
+                model_name="facebook/bart-large-cnn",
                 max_input_length=1024,
                 max_output_length=512,
-                min_output_length=30
+                min_output_length=30,
             ),
-            'ru': ModelConfig(
-                language='ru',
-                model_name='cointegrated/rut5-base-absum',
+            "ru": ModelConfig(
+                language="ru",
+                model_name="cointegrated/rut5-base-absum",
                 max_input_length=512,
                 max_output_length=200,
-                min_output_length=20
+                min_output_length=20,
             ),
-            'de': ModelConfig(
-                language='de',
-                model_name='ml6team/mt5-small-german-finetune-mlsum',
+            "de": ModelConfig(
+                language="de",
+                model_name="ml6team/mt5-small-german-finetune-mlsum",
                 max_input_length=512,
                 max_output_length=200,
-                min_output_length=20
-            )
+                min_output_length=20,
+            ),
         }
         self.model_configs = default_configs
-    
+
     def _create_directories(self):
         """Создание необходимых директорий."""
         dirs = [
@@ -235,88 +235,88 @@ class Config:
             self.paths.logs_dir,
             self.paths.cache_dir,
             self.paths.config_dir,
-            self.paths.temp_dir
+            self.paths.temp_dir,
         ]
-        
+
         for directory in dirs:
             try:
                 Path(directory).mkdir(parents=True, exist_ok=True)
             except Exception as e:
                 logger.warning(f"Не удалось создать директорию {directory}: {e}")
-    
+
     def _validate_config(self):
         """Валидация конфигурации."""
         # Проверка поддерживаемых языков
         for lang in self.supported_languages:
             if lang not in self.model_configs:
                 logger.warning(f"Для языка {lang} нет конфигурации модели")
-        
+
         # Проверка уровней сжатия
         for level in self.summarization.compression_levels:
             if level not in [20, 30, 50]:
                 logger.warning(f"Неподдерживаемый уровень сжатия: {level}")
-        
+
         # Проверка максимальной длины текста
         if self.security.max_input_length < self.text_processing.max_text_length:
             logger.warning(
                 f"Максимальная длина текста для обработки ({self.text_processing.max_text_length}) "
                 f"превышает максимальную длину ввода ({self.security.max_input_length})"
             )
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Преобразование конфигурации в словарь."""
         result = {}
-        
+
         for key, value in self.__dict__.items():
-            if hasattr(value, '__dict__') or isinstance(value, dict):
+            if hasattr(value, "__dict__") or isinstance(value, dict):
                 # Рекурсивно преобразуем объекты и словари
-                if hasattr(value, '__dict__'):
+                if hasattr(value, "__dict__"):
                     result[key] = asdict(value)
                 else:
                     result[key] = value
             else:
                 result[key] = value
-        
+
         return result
-    
+
     def to_json(self, indent: int = 2) -> str:
         """Сериализация конфигурации в JSON."""
         return json.dumps(self.to_dict(), indent=indent, ensure_ascii=False)
-    
+
     def save(self, file_path: str):
         """
         Сохранение конфигурации в файл.
-        
+
         Args:
             file_path: Путь к файлу
         """
         try:
             file_path = Path(file_path)
             file_path.parent.mkdir(parents=True, exist_ok=True)
-            
-            with open(file_path, 'w', encoding='utf-8') as file:
+
+            with open(file_path, "w", encoding="utf-8") as file:
                 file.write(self.to_json())
-            
+
             logger.info(f"Конфигурация сохранена в {file_path}")
         except Exception as e:
             logger.error(f"Ошибка сохранения конфигурации: {e}")
             raise
-    
+
     def update(self, config_dict: Dict[str, Any]):
         """
         Обновление конфигурации из словаря.
-        
+
         Args:
             config_dict: Словарь с новыми значениями
         """
         for key, value in config_dict.items():
             if hasattr(self, key):
                 current_value = getattr(self, key)
-                
+
                 if isinstance(current_value, dict) and isinstance(value, dict):
                     # Рекурсивное обновление словарей
                     current_value.update(value)
-                elif hasattr(current_value, '__dict__') and isinstance(value, dict):
+                elif hasattr(current_value, "__dict__") and isinstance(value, dict):
                     # Обновление объектов dataclass
                     for sub_key, sub_value in value.items():
                         if hasattr(current_value, sub_key):
@@ -325,38 +325,38 @@ class Config:
                     setattr(self, key, value)
             else:
                 logger.debug(f"Неизвестный параметр конфигурации: {key}")
-    
+
     def get_model_config(self, language: str) -> Optional[ModelConfig]:
         """
         Получение конфигурации модели для языка.
-        
+
         Args:
             language: Код языка
-        
+
         Returns:
             Конфигурация модели или None
         """
         return self.model_configs.get(language)
-    
+
     def is_language_supported(self, language: str) -> bool:
         """
         Проверка поддержки языка.
-        
+
         Args:
             language: Код языка
-        
+
         Returns:
             True если язык поддерживается
         """
         return language in self.supported_languages
-    
+
     def get_default_model_name(self, language: str) -> Optional[str]:
         """
         Получение имени модели по умолчанию для языка.
-        
+
         Args:
             language: Код языка
-        
+
         Returns:
             Имя модели или None
         """
@@ -367,47 +367,47 @@ class Config:
 def load_config(file_path: Optional[str] = None) -> Config:
     """
     Загрузка конфигурации из файла или создание по умолчанию.
-    
+
     Args:
         file_path: Путь к файлу конфигурации
-    
+
     Returns:
         Объект конфигурации
     """
     # Создаем конфигурацию по умолчанию
     config = Config()
-    
+
     if file_path:
         file_path = Path(file_path)
-        
+
         # Если файл существует, загружаем его
         if file_path.exists():
             try:
-                with open(file_path, 'r', encoding='utf-8') as file:
+                with open(file_path, "r", encoding="utf-8") as file:
                     config_dict = json.load(file)
-                
+
                 config.update(config_dict)
                 logger.info(f"Конфигурация загружена из {file_path}")
-                
+
             except json.JSONDecodeError as e:
                 logger.error(f"Ошибка парсинга JSON в файле {file_path}: {e}")
                 raise
             except Exception as e:
                 logger.error(f"Ошибка загрузки конфигурации из {file_path}: {e}")
                 raise
-        
+
         # Если файла нет, создаем его с конфигурацией по умолчанию
         else:
             logger.warning(f"Файл конфигурации {file_path} не найден, создаем новый")
             config.save(str(file_path))
-    
+
     return config
 
 
 def save_config(config: Config, file_path: str):
     """
     Сохранение конфигурации в файл.
-    
+
     Args:
         config: Объект конфигурации
         file_path: Путь к файлу
@@ -418,7 +418,7 @@ def save_config(config: Config, file_path: str):
 def get_default_config() -> Config:
     """
     Получение конфигурации по умолчанию.
-    
+
     Returns:
         Конфигурация по умолчанию
     """
@@ -428,17 +428,17 @@ def get_default_config() -> Config:
 def create_config_file(file_path: str, overwrite: bool = False):
     """
     Создание файла конфигурации с настройками по умолчанию.
-    
+
     Args:
         file_path: Путь к файлу
         overwrite: Перезаписывать существующий файл
     """
     file_path = Path(file_path)
-    
+
     if file_path.exists() and not overwrite:
         logger.warning(f"Файл уже существует: {file_path}")
         return
-    
+
     config = get_default_config()
     config.save(str(file_path))
     logger.info(f"Создан файл конфигурации: {file_path}")
@@ -447,10 +447,10 @@ def create_config_file(file_path: str, overwrite: bool = False):
 def get_config_path(config_name: str = "config.json") -> Path:
     """
     Получение пути к конфигурационному файлу.
-    
+
     Args:
         config_name: Имя конфигурационного файла
-    
+
     Returns:
         Путь к файлу конфигурации
     """
@@ -460,10 +460,10 @@ def get_config_path(config_name: str = "config.json") -> Path:
         Path("configs") / config_name,  # Папка configs
         Path.home() / ".multilingual_summarizer" / config_name,  # Домашняя директория
     ]
-    
+
     for path in possible_paths:
         if path.exists():
             return path
-    
+
     # Если файл не найден, возвращаем путь в текущей директории
     return Path(config_name)

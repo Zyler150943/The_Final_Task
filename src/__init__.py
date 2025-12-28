@@ -16,7 +16,7 @@ from .core import (
     LanguageDetector,
     create_language_detector,
     TextProcessor,
-    create_text_processor
+    create_text_processor,
 )
 
 from .models.abstractive import (
@@ -25,25 +25,25 @@ from .models.abstractive import (
     RussianSummarizer,
     GermanSummarizer,
     ModelFactory,
-    BatchSummarizer
+    BatchSummarizer,
 )
 
 # Для обратной совместимости
 Summarizer = TextSummarizer
 
 __all__ = [
-    'TextSummarizer',
-    'Summarizer',
-    'SummaryResult',
-    'create_summarizer',
-    'LanguageDetector',
-    'create_language_detector',
-    'TextProcessor',
-    'create_text_processor',
-    'AbstractiveModel',
-    'EnglishSummarizer',
-    'RussianSummarizer',
-    'GermanSummarizer',
-    'ModelFactory',
-    'BatchSummarizer',
+    "TextSummarizer",
+    "Summarizer",
+    "SummaryResult",
+    "create_summarizer",
+    "LanguageDetector",
+    "create_language_detector",
+    "TextProcessor",
+    "create_text_processor",
+    "AbstractiveModel",
+    "EnglishSummarizer",
+    "RussianSummarizer",
+    "GermanSummarizer",
+    "ModelFactory",
+    "BatchSummarizer",
 ]

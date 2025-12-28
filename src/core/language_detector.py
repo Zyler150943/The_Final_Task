@@ -27,12 +27,12 @@ class LanguageDetector:
 
     # Коды языков и их соответствие
     LANGUAGE_CODES = {
-        'en': 'english',
-        'ru': 'russian',
-        'de': 'german',
-        'english': 'en',
-        'russian': 'ru',
-        'german': 'de',
+        "en": "english",
+        "ru": "russian",
+        "de": "german",
+        "english": "en",
+        "russian": "ru",
+        "german": "de",
     }
 
     # Порог уверенности для определения языка
@@ -64,7 +64,7 @@ class LanguageDetector:
                 self.fasttext_model = fasttext.load_model(model_path)
             else:
                 # Попробуем загрузить предварительно обученную модель
-                self.fasttext_model = fasttext.load_model('lid.176.ftz')
+                self.fasttext_model = fasttext.load_model("lid.176.ftz")
             logger.info("Модель FastText успешно загружена")
         except Exception as e:
             logger.warning(f"Не удалось загрузить модель FastText: {e}")
@@ -131,13 +131,15 @@ class LanguageDetector:
                 confidence = float(predictions[1][0])
 
                 # Извлекаем код языка из метки (например, '__label__en')
-                if label.startswith('__label__'):
+                if label.startswith("__label__"):
                     lang_code = label[9:11]  # Берем первые 2 символа после __label__
 
                     if lang_code in self.LANGUAGE_CODES:
                         return self.LANGUAGE_CODES[lang_code], confidence
                     else:
-                        logger.warning(f"FastText обнаружил неподдерживаемый язык: {lang_code}")
+                        logger.warning(
+                            f"FastText обнаружил неподдерживаемый язык: {lang_code}"
+                        )
                         return None, 0.0
 
             return None, 0.0
@@ -147,9 +149,7 @@ class LanguageDetector:
             return None, 0.0
 
     def detect_language(
-        self,
-        text: str,
-        prefer_fasttext: Optional[bool] = None
+        self, text: str, prefer_fasttext: Optional[bool] = None
     ) -> Dict[str, any]:
         """
         Определение языка текста.
@@ -171,37 +171,41 @@ class LanguageDetector:
         """
         if not text or len(text.strip()) < 10:
             return {
-                'language_code': None,
-                'language_name': None,
-                'confidence': 0.0,
-                'method': 'none',
-                'is_supported': False,
-                'error': 'Текст слишком короткий для определения языка'
+                "language_code": None,
+                "language_name": None,
+                "confidence": 0.0,
+                "method": "none",
+                "is_supported": False,
+                "error": "Текст слишком короткий для определения языка",
             }
 
-        use_fasttext = prefer_fasttext if prefer_fasttext is not None else self.use_fasttext
+        use_fasttext = (
+            prefer_fasttext if prefer_fasttext is not None else self.use_fasttext
+        )
 
         # Определяем язык выбранным методом
         if use_fasttext and self.fasttext_model:
             language_code, confidence = self.detect_with_fasttext(text)
-            method = 'fasttext'
+            method = "fasttext"
         else:
             language_code, confidence = self.detect_with_langdetect(text)
-            method = 'langdetect'
+            method = "langdetect"
 
         # Проверяем, поддерживается ли язык
-        is_supported = language_code in ['en', 'ru', 'de']
+        is_supported = language_code in ["en", "ru", "de"]
 
         # Получаем название языка
-        language_name = self.LANGUAGE_CODES.get(language_code) if language_code else None
+        language_name = (
+            self.LANGUAGE_CODES.get(language_code) if language_code else None
+        )
 
         result = {
-            'language_code': language_code,
-            'language_name': language_name,
-            'confidence': confidence,
-            'method': method,
-            'is_supported': is_supported,
-            'error': None
+            "language_code": language_code,
+            "language_name": language_name,
+            "confidence": confidence,
+            "method": method,
+            "is_supported": is_supported,
+            "error": None,
         }
 
         # Логируем результат
@@ -216,9 +220,7 @@ class LanguageDetector:
         return result
 
     def detect_language_batch(
-        self,
-        texts: list,
-        prefer_fasttext: Optional[bool] = None
+        self, texts: list, prefer_fasttext: Optional[bool] = None
     ) -> list:
         """
         Пакетное определение языка для нескольких текстов.
@@ -239,14 +241,16 @@ class LanguageDetector:
                 logger.debug(f"Обработан текст {i+1}/{len(texts)}")
             except Exception as e:
                 logger.error(f"Ошибка при определении языка текста {i+1}: {e}")
-                results.append({
-                    'language_code': None,
-                    'language_name': None,
-                    'confidence': 0.0,
-                    'method': 'error',
-                    'is_supported': False,
-                    'error': str(e)
-                })
+                results.append(
+                    {
+                        "language_code": None,
+                        "language_name": None,
+                        "confidence": 0.0,
+                        "method": "error",
+                        "is_supported": False,
+                        "error": str(e),
+                    }
+                )
 
         return results
 
@@ -260,7 +264,7 @@ class LanguageDetector:
         Returns:
             True если язык поддерживается
         """
-        return language_code in ['en', 'ru', 'de']
+        return language_code in ["en", "ru", "de"]
 
     def get_language_name(self, language_code: str) -> Optional[str]:
         """
@@ -281,16 +285,15 @@ class LanguageDetector:
         Returns:
             Список доступных методов
         """
-        methods = ['langdetect']
+        methods = ["langdetect"]
         if self.fasttext_model:
-            methods.append('fasttext')
+            methods.append("fasttext")
         return methods
 
 
 # Фабричная функция для удобства
 def create_language_detector(
-    use_fasttext: bool = False,
-    model_path: Optional[str] = None
+    use_fasttext: bool = False, model_path: Optional[str] = None
 ) -> LanguageDetector:
     """
     Создание экземпляра LanguageDetector.
@@ -313,7 +316,7 @@ if __name__ == "__main__":
         "Это пример текста на русском языке для тестирования определения языка.",
         "Dies ist ein Beispieltext in deutscher Sprache zum Testen der Spracherkennung.",
         "Ceci est un texte exemple en français pour tester la détection de langue.",
-        "短文本测试"
+        "短文本测试",
     ]
 
     # Создание детектора
@@ -323,26 +326,28 @@ if __name__ == "__main__":
     for i, text in enumerate(sample_texts, 1):
         print(f"\nТекст {i}:")
         print(f"Содержимое: {text[:50]}...")
-        
+
         result = detector.detect_language(text)
-        
-        if result['language_code']:
+
+        if result["language_code"]:
             print(f"Язык: {result['language_name']} ({result['language_code']})")
             print(f"Уверенность: {result['confidence']:.2f}")
             print(f"Метод: {result['method']}")
             print(f"Поддерживается: {result['is_supported']}")
         else:
             print("Не удалось определить язык")
-            if result['error']:
+            if result["error"]:
                 print(f"Ошибка: {result['error']}")
 
     # Пример пакетной обработки
     print("\n\n=== Пакетная обработка ===")
     batch_results = detector.detect_language_batch(sample_texts)
-    
+
     for i, result in enumerate(batch_results, 1):
-        if result['language_code']:
-            print(f"Текст {i}: {result['language_name']} "
-                  f"(уверенность: {result['confidence']:.2f})")
+        if result["language_code"]:
+            print(
+                f"Текст {i}: {result['language_name']} "
+                f"(уверенность: {result['confidence']:.2f})"
+            )
         else:
             print(f"Текст {i}: Не определен")
